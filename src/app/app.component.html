@@ -1,10 +1,34 @@
-<div style="text-align:center"class="container">
-  <h1>
-    Welcome {{title}}!
-  </h1>
-  <div class="container">
-    <p>Id: <span>{{data['id']}}</span></p>
-    <p>Message: <span>{{data['content']}}</span></p>
-  </div>
+<div class="example-container">
+  <h1>Interview Project</h1>
+  <form (ngSubmit)="submit()"
+    class="example-form d-flex flex-column justify-content-around">
+    <mat-form-field appearance="outline" class="example-full-width">
+      <mat-label>Telephone Number</mat-label>
+      <span matPrefix>+1 &nbsp;</span>
+      <input maxlength="10" minlength="7" matInput type="tel"
+        autocomplete="tel-national" autofocus autocapitalize="on"
+        [formControl]="telephoneControl" [errorStateMatcher]="matcher"
+        placeholder="2014000000">
+      <mat-hint>
+        You need to provide a valid us phone number ie: 2014000000
+      </mat-hint>
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-error
+        *ngIf="telephoneControl.hasError('telephone') && !telephoneControl.hasError('required')">
+        Please enter a valid <strong>US</strong> telephone number
+      </mat-error>
+      <mat-error *ngIf="telephoneControl.hasError('required')">
+        Valid telephone number is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <div class="d-flex flex-row justify-content-center pt-3">
+      <button mat-raised-button type=submit>Submit form</button>
+      <button mat-raised-button type=reset>Reset form</button>
+    </div>
+  </form>
+  <br>
 </div>
-
+<div class="container pt-5" *ngIf="showResults">
+  <app-results [number]="phoneNumber" (more)="getResult($event)"
+    [results]="count"></app-results>
+</div>
