@@ -1,4 +1,4 @@
-![alt text](./cellPhoneForm.png "Logo Title Text 1")
+![alt text](./cellPhoneForm.PNG "Logo Title Text 1")
 
 
 1. After running generate-resources you manually need to start the ng server.
