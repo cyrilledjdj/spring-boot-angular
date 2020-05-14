@@ -1,8 +1,7 @@
-<div class="example-container">
+<div class="d-flex flex-column align-items-center">
   <h1>Interview Project</h1>
-  <form (ngSubmit)="submit()"
-    class="example-form d-flex flex-column justify-content-around">
-    <mat-form-field appearance="outline" class="example-full-width">
+  <form (ngSubmit)="submit()" class="d-flex flex-column justify-content-around">
+    <mat-form-field appearance="outline">
       <mat-label>Telephone Number</mat-label>
       <span matPrefix>+1 &nbsp;</span>
       <input maxlength="10" minlength="7" matInput type="tel"
@@ -21,7 +20,7 @@
         Valid telephone number is <strong>required</strong>
       </mat-error>
     </mat-form-field>
-    <div class="d-flex flex-row justify-content-center pt-3">
+    <div class="d-flex flex-row justify-content-around pt-3">
       <button mat-raised-button type=submit>Submit form</button>
       <button mat-raised-button type=reset>Reset form</button>
     </div>
