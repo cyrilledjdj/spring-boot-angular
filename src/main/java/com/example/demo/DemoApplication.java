@@ -51,9 +51,6 @@ public class DemoApplication {
       }
       return value;
   }
-  private static String deleteCharAt(String strValue, int index) {
-    return strValue.substring(0, index) + strValue.substring(index + 1);
-  }
 
   private static Set<AlphaNumericTelephone> generateAlphaNumberBasedOnIndex(String phonenumber, int lengthToStore){
     Set<AlphaNumericTelephone> perm = new TreeSet<AlphaNumericTelephone>();
@@ -64,33 +61,36 @@ public class DemoApplication {
         perm.add(new AlphaNumericTelephone(""));
         return perm;
     }
-    int phoneNumberLength = phonenumber.length();
-    for (int i = phoneNumberLength - 1; i >= 0; i--){
-      Character currentChar = phonenumber.charAt(i);
+    for(String item : permutateStuff(phonenumber)) {
+      perm.add(new AlphaNumericTelephone(item));
+    }
+    return perm;
+  }
+
+  private static Set<String> permutateStuff(String phonenumber){
+    Set<String> answer = new TreeSet<String>();
+    if(phonenumber != null && phonenumber.length() != 0) {
+      Character currentChar = phonenumber.charAt(0);
       Set<Character> keys = AlphaNumericTelephone.alphaMatch(currentChar);
+      Set<String> combs = permutateStuff(phonenumber.substring(1));
+      if(keys.isEmpty()){
+        if(combs.isEmpty()){
+          answer.add(phonenumber);
+        }
+        for(String item: combs){
+          answer.add(currentChar + item);
+        }
+      }
       for (Character j : keys){
-        currentChar = phonenumber.charAt(i);
-        AlphaNumericTelephone currentPhoneNumber = new AlphaNumericTelephone(phonenumber.replace(currentChar, j));
-        perm.add(currentPhoneNumber);
-        int charLocation = currentPhoneNumber.getAlpha().lastIndexOf(j);
-        if(charLocation != -1) {
-          Set<AlphaNumericTelephone> perms = generateAlphaNumberBasedOnIndex(
-            deleteCharAt(
-              currentPhoneNumber.getAlpha(),
-              charLocation
-            ), lengthToStore);
-          for(AlphaNumericTelephone number : perms) {
-            String permutationNumber = (
-              number.getAlpha().substring(0, charLocation) + j + number.getAlpha().substring(charLocation, number.getAlpha().length())
-            );
-            if(permutationNumber.length() == lengthToStore) {
-              perm.add(new AlphaNumericTelephone(permutationNumber));
-            }
-          }
+        if(combs.isEmpty()){
+          answer.add(j + phonenumber.substring(1));
+        }
+        for(String item : combs) {
+          answer.add(j + item);
         }
       }
     }
-    return perm;
+    return answer;
   }
 
   @GetMapping("/resource")

@@ -33,6 +33,7 @@ public class DemoApplicationTests {
   @Test
   public void list() throws Exception{
     Collection<AlphaNumericTelephone> collection = demoApplicationMock.alphaNumericList("2014000000", 15, 1);
+    // There should only be one two pages for this specific size and the second page will have only one item
     for(AlphaNumericTelephone number : collection){
       assertTrue(number.getAlpha().equals("C01I000000"));
     }
